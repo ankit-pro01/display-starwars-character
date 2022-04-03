@@ -20,6 +20,12 @@ function Character({ character }: Props): ReactElement {
           <h5 className="card-title text-capitalize" id={characterId}>
             {character.name}
           </h5>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">
+              <span className="badge badge-secondary text-secondary">Gender : </span>
+              <span className="badge badge-secondary text-primary">{character.gender}</span>
+            </li>
+          </ul>
           <button
             onClick={() => {
               if (characterId) navigate(`${location.pathname}/${characterId}`);

@@ -22,15 +22,52 @@ interface IcharacterDetails {
   imageUrl?: string;
   url?: string;
 }
-interface Props {}
 
-export default function CharacterDetails({}: Props): ReactElement {
+export default function CharacterDetails(): ReactElement {
   const params = useParams();
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [loading, isError, characterDetails] = useFetch(characterImageURl, params.characterId);
-  const characterDetailsObj = { ...characterDetails } as IcharacterDetails;
   const [characterData, setCharacterData] = useState({} as IcharacterDetails);
   const [disabledFavouritiesButton, setDisabledFavouritiesButton] = useState(false);
+
+  const characterDetailsObj = Object.assign(characterDetails as unknown as IcharacterDetails);
+
+  const fetchAllFilms = async (films: []) => {
+    const filmArr = films.map((film) => {
+      return fetchContent(film);
+    });
+    const promise = await Promise.all([...filmArr]);
+    return promise;
+  };
+
+  const fetchHomePlanet = async (homeworld: string) => {
+    const promise = await fetchContent(homeworld);
+    return promise;
+  };
+
+  const fetchAllStarShips = async (starships: []) => {
+    const starshipsArr = starships.map((starship) => {
+      return fetchContent(starship);
+    });
+    const results = await Promise.all([...starshipsArr]);
+    return results;
+  };
+
+  const fetchAllData = async (characterDetail: IcharacterDetails) => {
+    const homePlanet = await fetchHomePlanet(characterDetail.homeworld as string);
+    const films = await fetchAllFilms(characterDetail.films);
+    const starShips = await fetchAllStarShips(characterDetail.starships);
+    return Promise.resolve([homePlanet, films, starShips]);
+  };
+
+  const addToFavourities = () => {
+    if (getFavouritiesCharactersName().includes(characterData.name)) {
+      console.log('already in favourities list');
+    } else {
+      addToFavouritiesList(characterData as unknown as Record<string, string>);
+      setDisabledFavouritiesButton(true);
+    }
+  };
 
   useEffect(() => {
     if (
@@ -42,21 +79,21 @@ export default function CharacterDetails({}: Props): ReactElement {
       fetchAllData(characterDetailsObj)
         .then((res) => {
           const [homePlanet, films, starShips] = res;
-          characterDetailsObj['homeworld'] = homePlanet.name;
-          characterDetailsObj['films'] = films
-            .reduce((acc: any, el: { [x: string]: any }) => {
-              return [...acc, el['title']];
+          characterDetailsObj.homeworld = homePlanet.name;
+          characterDetailsObj.films = films
+            .reduce((acc: Array<unknown>, el: { [x: string]: unknown }) => {
+              return [...acc, el.title];
             }, [])
             .join(',');
 
-          characterDetailsObj['starships'] = starShips
-            .reduce((acc: any, el: { [x: string]: any }) => {
-              return [...acc, el['name']];
+          characterDetailsObj.starships = starShips
+            .reduce((acc: Array<unknown>, el: { [x: string]: unknown }) => {
+              return [...acc, el.name];
             }, [])
             .join(',');
-          let details = { ...characterDetailsObj };
+          const details = { ...characterDetailsObj };
           const { imageUrl } = appendImgUrl(details as unknown as Record<string, string>);
-          details['imageUrl'] = imageUrl;
+          details.imageUrl = imageUrl;
           setDetailsLoading(false);
           if (getFavouritiesCharactersName().includes(details.name)) {
             setDisabledFavouritiesButton(true);
@@ -69,40 +106,6 @@ export default function CharacterDetails({}: Props): ReactElement {
         });
     }
   }, [characterDetails]);
-
-  const fetchAllData = async (characterDetailsObj: IcharacterDetails) => {
-    const homePlanet = await fetchHomePlanet(characterDetailsObj['homeworld'] as string);
-    const films = await fetchAllFilms(characterDetailsObj['films']);
-    const starShips = await fetchAllStarShips(characterDetailsObj['starships']);
-    return Promise.resolve([homePlanet, films, starShips]);
-  };
-
-  const fetchAllFilms = async (films: []) => {
-    const filmArr = films.map((film) => {
-      return fetchContent(film);
-    });
-    return await Promise.all([...filmArr]);
-  };
-
-  const fetchHomePlanet = async (homeworld: string) => {
-    return await fetchContent(homeworld);
-  };
-
-  const fetchAllStarShips = async (starships: []) => {
-    const starshipsArr = starships.map((starship) => {
-      return fetchContent(starship);
-    });
-    return await Promise.all([...starshipsArr]);
-  };
-
-  const addToFavourities = () => {
-    if (getFavouritiesCharactersName().includes(characterData.name)) {
-      console.log('already in favourities list');
-    } else {
-      addToFavouritiesList(characterData as unknown as Record<string, string>);
-      setDisabledFavouritiesButton(true);
-    }
-  };
 
   const message = (
     <div className="alert alert-success" role="alert">

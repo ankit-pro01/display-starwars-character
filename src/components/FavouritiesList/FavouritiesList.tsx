@@ -6,7 +6,7 @@ interface Props {
   handleRemoveCharacter: (a: string) => void;
 }
 
-interface data {
+interface Idata {
   name: string;
   height: string;
   gender: string;
@@ -16,7 +16,7 @@ interface data {
 
 interface InputProps {
   id: string;
-  item: data;
+  item: Idata;
   name: string;
   value: string;
 }
@@ -27,7 +27,7 @@ const InputElement = ({ id, item, name, value }: InputProps): ReactElement => {
 
   useEffect(() => {
     if (!isReadOnly) {
-      let newObj = { ...item, ...characterSate };
+      const newObj = { ...item, ...characterSate };
       upDateFavouritiesObject(id, newObj);
     }
   }, [characterSate]);
@@ -37,9 +37,9 @@ const InputElement = ({ id, item, name, value }: InputProps): ReactElement => {
   };
 
   const handleInputValue = (e: React.KeyboardEvent) => {
-    const value = (e.target as HTMLInputElement).value;
-    const name = (e.target as HTMLInputElement).id;
-    setCharacterState({ [name]: value });
+    const inputValue = (e.target as HTMLInputElement).value;
+    const inputId = (e.target as HTMLInputElement).id;
+    setCharacterState({ [inputId]: inputValue });
   };
 
   const isEditable = ['height', 'gender'].includes(name);
@@ -77,11 +77,11 @@ const InputElement = ({ id, item, name, value }: InputProps): ReactElement => {
 };
 
 function FavouritiesList({ listItem, handleRemoveCharacter }: Props): ReactElement {
-  const { _id } = listItem;
-  const favouritiesData = listItem[_id] as unknown as data;
+  const { characterId } = listItem;
+  const favouritiesData = listItem[characterId] as unknown as Idata;
 
   const handleRemove = () => {
-    handleRemoveCharacter(_id);
+    handleRemoveCharacter(characterId);
   };
 
   return (
@@ -95,7 +95,7 @@ function FavouritiesList({ listItem, handleRemoveCharacter }: Props): ReactEleme
         <ul className="list-group">
           <li className="list-group-item">
             <InputElement
-              id={_id}
+              id={characterId}
               item={favouritiesData}
               name={'name'}
               value={favouritiesData.name}
@@ -103,26 +103,26 @@ function FavouritiesList({ listItem, handleRemoveCharacter }: Props): ReactEleme
           </li>
           <li className="list-group-item">
             <InputElement
-              id={_id}
+              id={characterId}
               item={favouritiesData}
               name={'height'}
-              value={favouritiesData['height']}
+              value={favouritiesData.height}
             />
           </li>
           <li className="list-group-item">
             <InputElement
-              id={_id}
+              id={characterId}
               item={favouritiesData}
               name={'gender'}
-              value={favouritiesData['gender']}
+              value={favouritiesData.gender}
             />
           </li>
           <li className="list-group-item">
             <InputElement
-              id={_id}
+              id={characterId}
               item={favouritiesData}
               name={'homeworld'}
-              value={favouritiesData['homeworld']}
+              value={favouritiesData.homeworld}
             />
           </li>
         </ul>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import fetchContent, { getAllStarwarsPeople } from './util';
 
-type ApiData = [] | {};
+type ApiData = Record<string, unknown> | Array<Record<string, unknown>>;
 
 export default function useFetch(url: string, id = '') {
   const apiUrl = id ? `${url}/${id}` : url;

@@ -2,9 +2,7 @@ import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/Images/logo.png';
 
-interface Props {}
-
-export default function NavBar({}: Props): ReactElement {
+export default function NavBar(): ReactElement {
   return (
     <nav className="navbar sticky-top  navbar-expand-lg navbar-dark bg-dark">
       <div className="container">

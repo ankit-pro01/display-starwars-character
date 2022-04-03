@@ -4,9 +4,7 @@ import { FAVOURITIES_LIST_LABEL } from '../../ApplicationConstants';
 import { getFavouritiesList, removeFromFavourities } from '../../Utils/util';
 import FavouritiesList from '../../components/FavouritiesList/FavouritiesList';
 
-interface Props {}
-
-export default function Favourities({}: Props): ReactElement {
+export default function Favourities(): ReactElement {
   const [favouritiesList, setFavouritiesList] = useState([]);
 
   useEffect(() => {

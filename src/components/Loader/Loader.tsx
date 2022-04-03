@@ -1,9 +1,7 @@
 import React, { ReactElement } from 'react';
 import Logo from '../../assets/Images/logo.png';
 
-interface Props {}
-
-function Loader({}: Props): ReactElement {
+function Loader(): ReactElement {
   return (
     <div
       className="d-flex flex-column justify-content-center align-items-center"

@@ -8,19 +8,17 @@ import Pagination from '../../components/Pagination/Pagination';
 import SearchComponent from '../../components/SearchComponent/SearchComponent';
 import { characterUrl } from '../../ApplicationConstants';
 
-interface Props {}
-
-export default function CharacterList({}: Props): ReactElement {
+export default function CharacterList(): ReactElement {
   const [page, handlePage] = useState(0);
   const [peopleUrl, setPeopleUrl] = useState(characterUrl);
   const [loading, isError, characterList] = useFetch(peopleUrl);
   const [results, setResults] = useState([]);
-  let navigate = useNavigate();
-  let location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!!characterList) {
-      let list = [...(characterList as [])];
+      const list = [...(characterList as [])];
       setResults(list.slice(page * 10, (page + 1) * 10));
     }
     window?.scrollTo(0, 0);
