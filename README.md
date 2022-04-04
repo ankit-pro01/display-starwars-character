@@ -1,4 +1,38 @@
-# Getting Started with Create React App
+It is a react typescript project which is for displaying all the characters of star wars from https://swapi.dev/ api's.
+and allows the user to add characters to a favourites list and edit some of thier attributes. I have also used https://starwars-visualguide.com/assets/img/characters for taking the imageURl of star wars characters.
+
+## Technologies
+Project is created with:
+* React version: ^18;
+* react-router-dom version: ^6.3
+* bootstrap": ^5.1.3"
+
+## Project Overview
+Ir has four Views Homepage, CharactersListView, CharactersDetailsView, FavourtiesView
+* Homepage: In Home page there is an starwars bannrer.From Navbar we can navigate to the different views of this website.
+* Characters ListView: In this view all the characters are paginated on the basis of 10 character per page. In this view we can search any apecific character from star wars universe.
+* Characters DetailsView": It shows all the details of an individual character on a page. from here we can add our favoutie characters to our         favourities list.
+* Favourties View: This consists of all the favourities character that can bd added from details Characters Details View. In this page we can amend the height and gender attribute of the character.
+
+## Next action item and Improvements
+I did not got much time to work on this , completely forgot to ad  the unit test cases for components will be focus on writing the unit test cases for this project.
+Will add the functionality so that character can be added to favourities list from listview page only instead of going to details page.
+
+
+
+## Set Up
+```
+  $cd ../my-app
+  @cd npm install
+  @cd npm start
+  
+```
+Project with start [http://localhost:3000];
+
+
+if creating a new Project follow below instructions.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -14,10 +48,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
