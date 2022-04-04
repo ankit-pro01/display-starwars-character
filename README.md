@@ -1,3 +1,7 @@
+# Star Wars Characters App.
+
+App link : https://velvety-trifle-ae1797.netlify.app/
+
 It is a react typescript project which is for displaying all the characters of star wars from https://swapi.dev/ api's.
 and allows the user to add characters to a favourites list and edit some of thier attributes. I have also used https://starwars-visualguide.com/assets/img/characters for taking the imageURl of star wars characters.
 
