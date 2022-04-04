@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { upDateFavouritiesObject } from '../../Utils/util';
+import Loader from '../Loader/Loader';
 
 interface Props {
   listItem: Record<string, string>;
@@ -77,62 +78,65 @@ const InputElement = ({ id, item, name, value }: InputProps): ReactElement => {
 };
 
 function FavouritiesList({ listItem, handleRemoveCharacter }: Props): ReactElement {
-  const { characterId } = listItem;
-  const favouritiesData = listItem[characterId] as unknown as Idata;
+  const { _id: characterId } = listItem;
+  const favouritiesData: Idata | null = listItem[characterId] as unknown as Idata;
+
+  console.log('favouritiesData', listItem, favouritiesData);
 
   const handleRemove = () => {
     handleRemoveCharacter(characterId);
   };
-
   return (
-    <div className="row d-flex justify-content-center align-items-center">
-      <img
-        className="col-md-4  rounded-circle"
-        style={{ maxHeight: '18rem' }}
-        src={favouritiesData.imageUrl}
-      ></img>
-      <div className="col-md-6">
-        <ul className="list-group">
-          <li className="list-group-item">
-            <InputElement
-              id={characterId}
-              item={favouritiesData}
-              name={'name'}
-              value={favouritiesData.name}
-            />
-          </li>
-          <li className="list-group-item">
-            <InputElement
-              id={characterId}
-              item={favouritiesData}
-              name={'height'}
-              value={favouritiesData.height}
-            />
-          </li>
-          <li className="list-group-item">
-            <InputElement
-              id={characterId}
-              item={favouritiesData}
-              name={'gender'}
-              value={favouritiesData.gender}
-            />
-          </li>
-          <li className="list-group-item">
-            <InputElement
-              id={characterId}
-              item={favouritiesData}
-              name={'homeworld'}
-              value={favouritiesData.homeworld}
-            />
-          </li>
-        </ul>
+    !!favouritiesData && (
+      <div className="row d-flex justify-content-center align-items-center">
+        <img
+          className="col-md-4  rounded-circle"
+          style={{ maxHeight: '18rem' }}
+          src={favouritiesData.imageUrl}
+        ></img>
+        <div className="col-md-6">
+          <ul className="list-group">
+            <li className="list-group-item">
+              <InputElement
+                id={characterId}
+                item={favouritiesData}
+                name={'name'}
+                value={favouritiesData.name}
+              />
+            </li>
+            <li className="list-group-item">
+              <InputElement
+                id={characterId}
+                item={favouritiesData}
+                name={'height'}
+                value={favouritiesData.height}
+              />
+            </li>
+            <li className="list-group-item">
+              <InputElement
+                id={characterId}
+                item={favouritiesData}
+                name={'gender'}
+                value={favouritiesData.gender}
+              />
+            </li>
+            <li className="list-group-item">
+              <InputElement
+                id={characterId}
+                item={favouritiesData}
+                name={'homeworld'}
+                value={favouritiesData.homeworld}
+              />
+            </li>
+          </ul>
+        </div>
+        <div className="col-md-2">
+          <button type="button" className="btn btn-outline-danger" onClick={() => handleRemove()}>
+            <span className="bi bi-trash"></span>Remove
+          </button>
+        </div>
       </div>
-      <div className="col-md-2">
-        <button type="button" className="btn btn-outline-danger" onClick={() => handleRemove()}>
-          <span className="bi bi-trash"></span>Remove
-        </button>
-      </div>
-    </div>
+    )
   );
 }
 

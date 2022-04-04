@@ -23,6 +23,8 @@ export default function useFetch(url: string, id = '') {
           setData(list);
         })
         .catch((err) => {
+          console.log(err);
+          setLoading(false);
           setIsError(true);
         });
     }

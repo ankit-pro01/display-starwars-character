@@ -9,6 +9,7 @@ export default function Favourities(): ReactElement {
 
   useEffect(() => {
     setFavouritiesList(getFavouritiesList());
+    console.log(getFavouritiesList());
   }, []);
 
   const handleRemoveCharacter = (id: string) => {
@@ -20,12 +21,10 @@ export default function Favourities(): ReactElement {
     <div className="alert alert-secondary" role="alert">
       Hi there! Your FavouritiesList is empty.
       <Link className="nav-link fw-bolder text-primary border border-bottom" to="/characters">
-        {' '}
         Click here to add characters
       </Link>
     </div>
   );
-
   return (
     <div
       className="mx-auto mt-4 px-4 overflow-auto"

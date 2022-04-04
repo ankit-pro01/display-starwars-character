@@ -9,7 +9,7 @@ import fetchContent, {
 } from '../../Utils/util';
 import Loader from '../../components/Loader/Loader';
 
-import { ADD_TO_FAVOURITIES, characterImageURl } from '../../ApplicationConstants';
+import { ADD_TO_FAVOURITIES, characterUrl } from '../../ApplicationConstants';
 
 interface IcharacterDetails {
   name: string;
@@ -26,7 +26,7 @@ interface IcharacterDetails {
 export default function CharacterDetails(): ReactElement {
   const params = useParams();
   const [detailsLoading, setDetailsLoading] = useState(false);
-  const [loading, isError, characterDetails] = useFetch(characterImageURl, params.characterId);
+  const [loading, isError, characterDetails] = useFetch(characterUrl, params.characterId);
   const [characterData, setCharacterData] = useState({} as IcharacterDetails);
   const [disabledFavouritiesButton, setDisabledFavouritiesButton] = useState(false);
 
