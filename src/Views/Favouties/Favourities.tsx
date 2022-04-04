@@ -9,7 +9,6 @@ export default function Favourities(): ReactElement {
 
   useEffect(() => {
     setFavouritiesList(getFavouritiesList());
-    console.log(getFavouritiesList());
   }, []);
 
   const handleRemoveCharacter = (id: string) => {
@@ -28,7 +27,7 @@ export default function Favourities(): ReactElement {
   return (
     <div
       className="mx-auto mt-4 px-4 overflow-auto"
-      style={{ maxWidth: '60rem', maxHeight: 'calc( 100vh- 10%)' }}
+      style={{ maxWidth: '60rem', maxHeight: 'calc(100vh - 120px)' }}
     >
       <ul className="list-group ">
         <li className="list-group-item active sticky-top bg-secondary" style={{ zIndex: '12' }}>

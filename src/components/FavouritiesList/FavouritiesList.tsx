@@ -81,8 +81,6 @@ function FavouritiesList({ listItem, handleRemoveCharacter }: Props): ReactEleme
   const { _id: characterId } = listItem;
   const favouritiesData: Idata | null = listItem[characterId] as unknown as Idata;
 
-  console.log('favouritiesData', listItem, favouritiesData);
-
   const handleRemove = () => {
     handleRemoveCharacter(characterId);
   };
