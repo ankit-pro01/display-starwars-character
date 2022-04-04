@@ -15,22 +15,22 @@ export function generateRanDomID(name = 'xxxxx') {
   return `star-wars-id-${name}star-wars-id-${Math.floor(Math.random() * 100)}-id-${Date.now()}`;
 }
 
+export function getFavouritiesList() {
+  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVOURITIES_LIST) || '[]');
+}
+
 export function getFavouritiesCharactersName() {
-  let favouritiesList = getFavouritiesList();
+  const favouritiesList = getFavouritiesList();
   return favouritiesList.map((obj: { _id: string }) => {
     return obj._id.split('star-wars-id-')[1];
   });
 }
 
-export function getFavouritiesList() {
-  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVOURITIES_LIST) || '[]');
-}
-
 export function addToFavouritiesList(newCharacter: Record<string, string>) {
   (function () {
-    let favouritiesList = getFavouritiesList();
+    const favouritiesList = getFavouritiesList();
     //check if character already exists..
-    let isCharacterExists = favouritiesList.filter((obj: { _id: string }) => {
+    const isCharacterExists = favouritiesList.filter((obj: { _id: string }) => {
       return obj._id.split('star-wars-id-')[1] === newCharacter.name;
     });
 
@@ -44,22 +44,22 @@ export function addToFavouritiesList(newCharacter: Record<string, string>) {
 
 export function removeFromFavourities(id: string) {
   const list = getFavouritiesList();
-  let newList = list.filter((obj: { _id: string }) => obj._id !== id);
+  const newList = list.filter((obj: { _id: string }) => obj._id !== id);
   localStorage.setItem(LOCAL_STORAGE_FAVOURITIES_LIST, JSON.stringify(newList));
   return newList;
 }
 
-export function upDateFavouritiesObject(id: string, newObj: {}) {
+export function upDateFavouritiesObject(id: string, newCharacterObj: Record<string, string>) {
   const list = getFavouritiesList();
-  let upDatedObj = list.filter((obj: { _id: string }) => obj._id === id);
+  const upDatedObj = list.filter((obj: { _id: string }) => obj._id === id);
   let newupdateObj = upDatedObj[0][id];
-  newupdateObj = { ...newObj };
-  let updatedlist = list.map((obj: { _id: string }) => {
+  newupdateObj = { ...newCharacterObj };
+  const updatedlist = list.map((obj: { _id: string }) => {
     if (obj._id === id) {
-      let obj = {} as Record<string, string>;
-      obj[id] = newupdateObj;
-      obj['_id'] = id;
-      return obj;
+      const newObj = {} as Record<string, string>;
+      newObj[id] = newupdateObj;
+      newObj._id = id;
+      return newObj;
     } else {
       return obj;
     }
@@ -81,17 +81,16 @@ export async function getAllStarwarsPeople() {
   let people: Array<Record<string, string>> = [];
   const firstRespose = await fetch('https://swapi.dev/api/people/');
   const firstData = await firstRespose.json();
-  let { results, next } = firstData;
+  let { next } = firstData;
+  const { results } = firstData;
   people = results;
 
   while (!!next) {
-    let res = await fetch(next as string);
-    let data = await res.json();
-    let { results, next: newNext } = data;
-    people.push(...results);
+    const res = await fetch(next as string);
+    const data = await res.json();
+    const { results: newResults, next: newNext } = data;
+    people.push(...newResults);
     next = newNext;
   }
   return people;
 }
-
-export async function getSearchedQueryCharacters() {}
