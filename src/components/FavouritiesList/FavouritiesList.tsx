@@ -54,8 +54,8 @@ const InputElement = ({ id, item, name, value }: InputProps): ReactElement => {
       <input
         type="text"
         className="form-control"
-        placeholder="Username"
-        aria-label="Username"
+        placeholder={name}
+        aria-label={name}
         aria-describedby="basic-addon1"
         readOnly={!isEditable || isReadOnly}
         id={name}
@@ -67,7 +67,7 @@ const InputElement = ({ id, item, name, value }: InputProps): ReactElement => {
           <span
             className={`input-group-text btn ${isReadOnly ? 'btn-danger' : 'btn-success'}`}
             onClick={handleEdit}
-            id="basic-addon1"
+            id={`edit-button-${name}`}
           >
             {isReadOnly ? 'edit' : 'save'}
           </span>
